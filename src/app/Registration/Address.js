@@ -2,24 +2,29 @@
 // /app/registration/Address.js
 
 import { useFormik} from "formik";
-import { RegisterFormSchema } from "./validation";
+import { addressSchema, RegisterFormSchema } from "./validation";
+import { useDispatch, useSelector } from "react-redux";
+import { addData } from "../lib/userDataSlice";
+const Address = ({ onNext, onPrev }) => {
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.user.data.address || {});
 
-const initia = {
-streetaddress:'',
-  city:'',
-  state:'',
-  pincode:'',
-  country:'',
-  residencetype:''
-}
-const Address = ({ onNext,onPrev }) => {
- const formik = useFormik({
-  initialValues:initia,
-  validationSchema:RegisterFormSchema,
-  onSubmit:(values)=>{
-    console.log(values);
-  }
-})
+  const formik = useFormik({
+    initialValues: {
+      streetaddress: userData.streetaddress || "",
+      city: userData.city || "",
+      state: userData.state || "",
+      pincode: userData.pincode || "",
+      country: userData.country || "",
+      residencetype: userData.residencetype || "",
+    },
+    validationSchema: addressSchema,
+    onSubmit: (values) => {
+      dispatch(addData({ key: 'address', value:values }));
+      onNext();
+    },
+  });
+
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">Address Information</h2>
@@ -76,7 +81,7 @@ const Address = ({ onNext,onPrev }) => {
       <div className="relative">
       <label htmlFor='residencetype' className="text-sm font-medium block mb-1">Type of Residence</label>
       <select name='residencetype' id='residencetype' className='border border-grey-300 rounded w-full p-2'
-      {...formik.getFieldProps('reresidencetype')}>
+      {...formik.getFieldProps('residencetype')}>
         <option value='own'>Own</option>
         <option value='rent'>Rent</option>
         <option value='shared'>Shared</option>
@@ -84,10 +89,13 @@ const Address = ({ onNext,onPrev }) => {
       </select>
       <span className="text-red-500 font-xs">{formik.touched.residencetype && formik.errors.residencetype}</span>
       </div>
-      <button onClick={onPrev} className='border rounded-md p-1 bg-black text-white'>Back</button>
-      <button onClick={onNext} disabled={Object.keys(formik.errors).length>0} className='border rounded-md p-1 bg-black text-white mt-4'>
+      <div className="w-full flex justify-between">
+      <button onClick={onPrev} className="border rounded-md p-1 bg-black text-white mt-4">Back</button>
+      <button type="submit" className='border rounded-md p-1 bg-black text-white mt-4'>
         Next
       </button>
+      </div>
+      
       </form>
     </div>
   );
