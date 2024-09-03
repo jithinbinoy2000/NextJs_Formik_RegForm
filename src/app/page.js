@@ -52,10 +52,10 @@ export default function Home() {
       ) : (
         <div className="border bg-black rounded-md text-white p-2">
           <Link href={"/Registration"}>
-            <button className="px-4 py-2 bg-blue-500 rounded-md hover:bg-blue-600 transition-colors duration-300">Register</button>
+            <button className="px-4 py-2">Register</button>
           </Link>
         </div>
       )}
-    </div>
+    </div>  
   );
 }
