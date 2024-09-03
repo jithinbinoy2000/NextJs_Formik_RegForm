@@ -50,7 +50,7 @@ export const addressSchema = Yup.object().shape({
 // Card Payment 
 export const cardSchema = Yup.object().shape({
   cardholderName: Yup.string()
-    .required("Cardholder Name is required"),
+    .required("Cardholder Name is required").max(20,"max 20 characters"),
   cardNumber: Yup.string()
     .matches(/^[0-9]{16}$/, "Card Number must be 16 digits")
     .required("Card Number is required"),

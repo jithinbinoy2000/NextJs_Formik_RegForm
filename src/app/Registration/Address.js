@@ -18,7 +18,7 @@ const Address = ({ onNext, onPrev }) => {
       country: userData.country || "",
       residencetype: userData.residencetype || "",
     },
-    validationSchema: addressSchema,
+   validationSchema: addressSchema,
     onSubmit: (values) => {
       dispatch(addData({ key: 'address', value:values }));
       onNext();
@@ -28,6 +28,7 @@ const Address = ({ onNext, onPrev }) => {
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">Address Information</h2>
+      
       <form onSubmit={formik.handleSubmit} className="space-y-2">
       {/* Street Address */}
       <div className="relative">
@@ -97,6 +98,7 @@ const Address = ({ onNext, onPrev }) => {
       </div>
       
       </form>
+      <div className="w-full flex justify-center " style={{position:'relative', top:'-1rem'}}><progress value={2/3}  className="progress"></progress></div>
     </div>
   );
 };

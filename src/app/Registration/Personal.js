@@ -4,7 +4,7 @@ import { RegisterFormSchema } from "./validation"; // Ensure this path is correc
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addData } from "../lib/userDataSlice";
-
+import './style.css'
 
 const Personal = ({ onNext }) => {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ const Personal = ({ onNext }) => {
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">Personal Information</h2>
-
+      
       <form onSubmit={formik.handleSubmit} className="space-y-4">
         {/* Full Name */}
         <div className="relative">
@@ -209,6 +209,7 @@ const Personal = ({ onNext }) => {
           ) : null}
         </div>
           <div className="w-full flex justify-end">
+          
           <button
           type="submit" 
           disabled={!formik.isValid || formik.isSubmitting}
@@ -217,8 +218,10 @@ const Personal = ({ onNext }) => {
           Next
         </button>
           </div>
-        
+         
       </form>
+      <div className="w-full flex justify-center " style={{position:'relative', top:'-2rem'}}><progress value={1/3}  className="progress"></progress></div>
+      
     </div>
   );
 };

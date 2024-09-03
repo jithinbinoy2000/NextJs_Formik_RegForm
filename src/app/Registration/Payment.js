@@ -1,40 +1,70 @@
 "use client";
 // /app/registration/Payment.js
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import { cardSchema } from "./validation"; // Ensure the path and schema name are correct
 import { useDispatch, useSelector } from "react-redux";
+import { addData } from "../lib/userDataSlice";
+import Link from "next/link";
+import Image from "next/image";
 
 
 
 const Payment = ({ onPrev }) => {
+ 
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.user.data.payment || {});
-  console.log(userData);
+  const finalData = useSelector((state) => state.user.data);
   
+  const saveAllData = (data) => {
+    localStorage.setItem("data", JSON.stringify(data));
+    alert("Registration Completed");
+    window.location.href='/'
+  };
   const formik = useFormik({
     initialValues: {
       cardholderName: userData.cardholderName || "",
       cardNumber: userData.cardNumber || "",
       expiryDate: userData.expiryDate || "",
       cvv: userData.cvv || "",
-      billingAddress: userData.billingAddress || false,
+      billingAddress: userData.billingAddress || "",
       paymentMethod: userData.paymentMethod || "",
       amount: userData.amount || "",
     },
-    validationSchema: cardSchema,
+   validationSchema: cardSchema,
     onSubmit: (values) => {
       dispatch(addData({ key: 'payment', value: values }));
-      let finalData = useSelector((state)=>state.user.data)
-      localStorage.setItem("data",finalData);
-      alert("Registration Completed")
+      saveAllData(finalData)
     },
   });
+  useEffect(()=>{
+    console.log("hi");
+    console.log(formik);
+    
+    
+  })
+
 
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">Payment Information</h2>
-
+      <div className="card_container  flex justify-center items-center">
+        <div className="card">
+          <div className="block p-2">
+            <h2 className="text-xl font-bold text-white ">BankName</h2>
+            <h4 className="text-sm font-bold text-white">Credit Card</h4>
+          </div>
+          <div className="flex w-full items-center justify-between px-5 font-bold">
+            <Image src='/images/chip.png' width={40} height={100}/>
+            <Image src='/images/contactless.png' width={20} height={50}/>
+          </div>
+          <div className="chrome-text  text-sm font-bold p-2">{...formik.values.cardNumber.slice(0,4)||"****"}&nbsp;{...formik.values.cardNumber.slice(4,8)||"****"}&nbsp; {...formik.values.cardNumber.slice(8,12)||"****"}&nbsp;{...formik.values.cardNumber.slice(12,16)||"****"}</div>
+          <div className="flex w-full  items-center justify-between px-5 chrome-text">
+            <div className="text-wrap max-[10px] h-auto relative:" >{...formik.values.cardholderName.toUpperCase().slice(0,20)|| "Name"}</div>
+            <div>{...formik.values.expiryDate.split('/')[0] || "MM"}/{...formik.values.expiryDate.split('/')[1] || "YY"}</div>
+          </div>
+        </div>
+      </div>
       <form onSubmit={formik.handleSubmit} className="space-y-4">
         {/* Cardholder Name */}
         <div className="relative">
@@ -202,6 +232,7 @@ const Payment = ({ onPrev }) => {
           </button>
         </div>
       </form>
+      <div className="w-full flex justify-center " style={{position:'relative', top:'-1rem'}}><progress value={3/3}  className="progress"></progress></div>
     </div>
   );
 };

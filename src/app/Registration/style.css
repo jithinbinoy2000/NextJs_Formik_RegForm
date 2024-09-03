@@ -1,0 +1,70 @@
+/* styles/Progress.module.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap'); /
+@keyframes move {
+    from {
+      width: 0%;
+    }
+    to {
+      width: 100%;
+    }
+  }
+  
+  .progress {
+    width: 25%;
+    height: 10px;
+    border-radius: 10px;
+    background-color: #e0e0e0;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background-color: #000000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: move 3s linear;
+    width: 0%; 
+  }
+  
+  .animate {
+    width: 100%; 
+  }
+  
+  .card{
+    min-width: 300px;
+    height: 180px;
+    background: #00B4DB;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #0083B0, #00B4DB);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #0083B0, #00B4DB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    border:transparent;
+    border-radius: 10px;
+    display: block;
+  }
+
+
+  .chrome-text {
+    color: #d4cece; 
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3), 
+                 0 0 15px rgba(255, 255, 255, 0.6), 
+                 0 0 5px rgba(255, 255, 255, 0.178);
+    background: linear-gradient(135deg, #e5e5e5, #c0c0c0, #e5e5e5);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-family: 'Roboto', sans-serif; 
+  }
+  
+  @keyframes shine {
+    from {
+      left: -100%;
+    }
+    to {
+      left: 100%;
+    }
+  }
+  
+  @media{
+
+  }
